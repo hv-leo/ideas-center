@@ -4,7 +4,7 @@ Ideas Center is a brainstorming and idea-sharing platform that offers secure com
 ![Ideas Center - User Flow.](https://github.com/hv-leo/ideas-center/blob/main/docs/resources/UserFlow.png "User Flow.")
 
 ### Live Demo
-[Ideas Center on Heroku!](vast-falls-51494.herokuapp.com)
+[Ideas Center on Heroku!](https://vast-falls-51494.herokuapp.com)
 
 ### Deployment
 - To Local Docker Host: ```.\deploy_local.bat```
