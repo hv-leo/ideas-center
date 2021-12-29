@@ -32,35 +32,17 @@ const App = () => {
   if (isLoading) {
     return <Loading />;
   }
-
-  const spa = 
-    <Context.Provider value={[context, setContext]}>
-    <SnackbarProvider>
-      <Router history={history}>
-        <div id="app" className="d-flex flex-column h-100">
-          <NavBar />
-          <Container className="flex-grow-1 mt-5">
-            <Switch>
-              <Route path="/" exact component={Home} />
-              <Route path="/profile" component={Profile} />
-              <Route path="/partners" component={Partners} />
-              <Route path="/register" component={Register} />
-            </Switch>
-          </Container>
-          <Footer />
-        </div>
-      </Router>
-    </SnackbarProvider>
-  </Context.Provider>;
+  
+  const pubnub = new PubNub({
+    publishKey: "pub-c-a2346431-fd9b-4db8-9383-c84df5b1d097",
+    subscribeKey: "sub-c-6f0f2fd4-68c2-11ec-a4f8-fa616d2d2ecf",
+    uuid: 'Anonymous',
+  });
   
   if (user) {
     const name = `${user.given_name} ${user.family_name}`;
     const uuid = generateUUID(name);
-    const pubnub = new PubNub({
-      publishKey: "pub-c-0262b482-e8eb-41cd-a4ce-55c4350456ed",
-      subscribeKey: "sub-c-0de27bb2-67eb-11ec-8750-065127b61789",
-      uuid: uuid,
-    });
+    pubnub.setUUID( uuid );
 
     pubnub.objects.setUUIDMetadata({
       uuid: uuid,
@@ -70,16 +52,29 @@ const App = () => {
           profileUrl: user.picture
       }
     });
-
-    return (
-      <PubNubProvider client={pubnub}>
-        {spa}
-      </PubNubProvider>
-    );
   }
 
   return (
-    <>{spa}</>
+    <PubNubProvider client={pubnub}>
+      <Context.Provider value={[context, setContext]}>
+        <SnackbarProvider>
+          <Router history={history}>
+            <div id="app" className="d-flex flex-column h-100">
+              <NavBar />
+              <Container className="flex-grow-1 mt-5">
+                <Switch>
+                  <Route path="/" exact component={Home} />
+                  <Route path="/profile" component={Profile} />
+                  <Route path="/partners" component={Partners} />
+                  <Route path="/register" component={Register} />
+                </Switch>
+              </Container>
+              <Footer />
+            </div>
+          </Router>
+        </SnackbarProvider>
+      </Context.Provider>
+    </PubNubProvider>
   );
 };
 

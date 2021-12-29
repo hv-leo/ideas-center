@@ -10,3 +10,4 @@ call heroku container:push web --context-path=.. --arg env=prod --app vast-falls
 call heroku container:release web --app vast-falls-51494
 
 call heroku open --app vast-falls-51494
+call cd ..
