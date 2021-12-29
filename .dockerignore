@@ -1,0 +1,14 @@
+backend/node_modules/
+frontend/node_modules/
+frontend/build/
+exec.*
+npm-debug.log*
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
